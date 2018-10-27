@@ -1,6 +1,6 @@
-trash
+# Spagghetto
 
-lol
+Good ass perl scripts for making a Spacchetti project work locally. See [spag-test](https://github.com/justinwoo/spag-test) for an example.
 
 ```
 [bash:~/Code/spaghetto/testbed] master ギ ls -a

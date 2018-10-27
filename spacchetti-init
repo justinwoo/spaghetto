@@ -7,11 +7,16 @@ use FindBin '$RealBin';
 # This script initializes a Spacchetti project
 
 print `cp $RealBin/templates/gitignore .gitignore`;
+print `chmod +w .gitignore`;
 print `cp $RealBin/templates/spacchetti.dhall spacchetti.dhall`;
+print `chmod +w spacchetti.dhall`;
 print `cp $RealBin/templates/packages.dhall packages.dhall`;
+print `chmod +w packages.dhall`;
 print `mkdir -p src`;
 print `mkdir -p test`;
 print `cp $RealBin/templates/srcMain.purs src/Main.purs`;
+print `chmod +w src/Main.purs`;
 print `cp $RealBin/templates/testMain.purs test/Main.purs`;
+print `chmod +w test/Main.purs`;
 
 print "initialized Spacchetti project.\n";
