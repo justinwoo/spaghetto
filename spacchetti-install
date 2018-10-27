@@ -1,0 +1,26 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use FindBin '$RealBin';
+use feature 'say';
+
+print `$RealBin/spacchetti-make-json`;
+
+my $json_path = '.spacchetti/spacchetti.json';
+
+my @deps = `$RealBin/spacchetti-get-deps`;
+
+my $num = $#deps + 1;
+
+say "Installing $num packages";
+
+foreach my $target (@deps) {
+    chomp($target);
+    print `$RealBin/spacchetti-install-package $target`;
+
+    unless ($? == 0) {
+        say "Installation failed at $target";
+        exit 1;
+    }
+}

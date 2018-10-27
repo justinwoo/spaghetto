@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use FindBin '$RealBin';
+use feature 'say';
+
+if ($#ARGV < 0) {
+    print "Need an arg for what package to download, e.g. spacchetti-install-package console";
+    exit 1;
+}
+
+print `$RealBin/spacchetti-make-json keep`;
+
+my $name = $ARGV[0];
+chomp($name);
+
+my $json_path = '.spacchetti/spacchetti.json';
+
+my $version = `jq '.packages."$name".version' $json_path -r`;
+chomp($version);
+
+my $repo = `jq '.packages."$name".repo' $json_path -r`;
+chomp($repo);
+
+my $target = ".spacchetti/$name/$version";
+
+unless (-e $target) {
+    print `mkdir -p $target`;
+    print `cd $target && git init && git remote add origin $repo && git fetch origin $version && git -c advice.detachedHead=false checkout FETCH_HEAD`;
+
+    if ($? == 0) {
+        say "Installed $target";
+    } else {
+        print `rm -rf $target`;
+        say "Installation failed for $target";
+        exit 1;
+    }
+}

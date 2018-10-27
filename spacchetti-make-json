@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use FindBin '$RealBin';
+use feature 'say';
+
+print `mkdir -p .spacchetti`;
+my $json_path = '.spacchetti/spacchetti.json';
+
+my $keep_existing = $ARGV[0] eq "keep_existing" if ($#ARGV > -1);
+my $exists = -e $json_path;
+
+if ($exists && (not $keep_existing)) {
+    exit;
+} else {
+    print `cat spacchetti.dhall | dhall-to-json --pretty > $json_path`;
+    if ($? == 0) {
+        say "wrote $json_path";
+    } else {
+        print `rm $json_path`;
+        say "Compiling Spacchetti.dhall failed.";
+        exit 1;
+    }
+}

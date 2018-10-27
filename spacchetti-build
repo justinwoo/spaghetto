@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use FindBin '$RealBin';
+use feature 'say';
+
+print `$RealBin/spacchetti-make-json keep`;
+
+my $json_path = '.spacchetti/spacchetti.json';
+
+my @globs = `$RealBin/spacchetti-sources`;
+
+my $args = '"src/**/*.purs" "test/**/*.purs"';
+
+foreach my $glob (@globs) {
+    chomp($glob);
+    $args .= " $glob";
+}
+
+print `purs compile $args`;
+
+if ($? == 0) {
+    say "Build succeeded.";
+} else {
+    say "Build failed.";
+    exit 1;
+}
