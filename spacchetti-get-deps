@@ -23,9 +23,9 @@ sub getDeps {
 
     $visited{$name} = 1;
 
-    my @reverse_deps = `jq '.packages.${name}.dependencies | values[]' $json_path`;
+    my @transitive_deps = `jq '.packages.${name}.dependencies | values[]' $json_path`;
 
-    foreach my $target (@reverse_deps) {
+    foreach my $target (@transitive_deps) {
         getDeps($target);
     }
 }
