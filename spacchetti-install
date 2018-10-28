@@ -15,12 +15,30 @@ my $num = $#deps + 1;
 
 say "Installing $num packages";
 
+my @pids;
+
 foreach my $target (@deps) {
     chomp($target);
-    print `$RealBin/spacchetti-install-package $target`;
 
-    unless ($? == 0) {
-        say "Installation failed at $target";
-        exit 1;
+    my $pid = fork;
+
+    if (not defined $pid) {
+        die "Couldn't fork new child processes\n";
+    } elsif ($pid == 0) {
+        print `$RealBin/spacchetti-install-package $target`;
+
+        if ($? != 0) {
+            die "Installation failed at $target";
+        } else {
+            exit 0;
+        }
+    } else {
+        push @pids, $pid;
     }
 }
+
+for my $pid (@pids) {
+    waitpid $pid, 0;
+}
+
+say "Installed $num packages."
