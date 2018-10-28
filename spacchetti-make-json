@@ -8,10 +8,10 @@ use feature 'say';
 print `mkdir -p .spacchetti`;
 my $json_path = '.spacchetti/spacchetti.json';
 
-my $keep_existing = $ARGV[0] eq "keep_existing" if ($#ARGV > -1);
+my $keep_existing = $#ARGV > -1 ? $ARGV[0] eq "keep" : 0;
 my $exists = -e $json_path;
 
-if ($exists && (not $keep_existing)) {
+if ($exists && $keep_existing) {
     exit;
 } else {
     print `cat spacchetti.dhall | dhall-to-json --pretty > $json_path`;
