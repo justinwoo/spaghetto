@@ -23,6 +23,5 @@ print `purs compile $args`;
 if ($? == 0) {
     say "Build succeeded.";
 } else {
-    say "Build failed.";
-    exit 1;
+    die "Build failed.";
 }

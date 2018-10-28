@@ -19,7 +19,6 @@ if ($exists && $keep_existing) {
         say "wrote $json_path";
     } else {
         print `rm $json_path`;
-        say "Compiling Spacchetti.dhall failed.";
-        exit 1;
+        die "Compiling Spacchetti.dhall failed.";
     }
 }

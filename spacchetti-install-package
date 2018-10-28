@@ -6,8 +6,7 @@ use FindBin '$RealBin';
 use feature 'say';
 
 if ($#ARGV < 0) {
-    print "Need an arg for what package to download, e.g. spacchetti-install-package console";
-    exit 1;
+    die "Need an arg for what package to download, e.g. spacchetti-install-package console";
 }
 
 print `$RealBin/spacchetti-make-json keep`;
@@ -27,13 +26,12 @@ my $target = ".spacchetti/$name/$version";
 
 unless (-e $target) {
     print `mkdir -p $target`;
-    print `cd $target && git init && git remote add origin $repo && git fetch origin $version && git -c advice.detachedHead=false checkout FETCH_HEAD`;
+    print `cd $target && git init && git remote add origin $repo && git fetch --depth 1 origin $version && git -c advice.detachedHead=false checkout FETCH_HEAD`;
 
     if ($? == 0) {
         say "Installed $target";
     } else {
         print `rm -rf $target`;
-        say "Installation failed for $target";
-        exit 1;
+        die "Installation failed for $target";
     }
 }

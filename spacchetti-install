@@ -30,7 +30,7 @@ foreach my $target (@deps) {
         if ($? != 0) {
             die "Installation failed at $target";
         } else {
-            exit 0;
+            exit;
         }
     } else {
         push @pids, $pid;
