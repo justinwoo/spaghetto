@@ -2,6 +2,10 @@
 
 Good ass perl scripts for making a Spacchetti project work locally. See [spag-test](https://github.com/justinwoo/spag-test) for an example.
 
+After you've read through some stuff in this repo, check out [Psc-Package2Nix](https://github.com/justinwoo/psc-package2nix) for a nicer way to work with your Psc-Package dependencies.
+
+Blog post about this repo here: <https://qiita.com/kimagure/items/625070775da70b37b67e>
+
 ```
 [bash:~/Code/spaghetto/testbed] master ギ ls -a
 .  ..
